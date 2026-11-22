@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ============================================================
+       HEAD: information about the page (not shown on the page itself)
+       ============================================================ -->
+
+  <!-- Lets the browser read special characters correctly -->
+  <meta charset="UTF-8">
+
+  <!-- Makes the page fit phone screens (needed for responsive design) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- The title shows on the browser tab and in Google results -->
+  <title>Team Vibes Coding | Developer Team Portfolio</title>
+
+  <!-- A short description of the page (good for SEO) -->
+  <meta name="description" content="Team Vibes Coding is a developer team of three. Meet the team and see our skills, projects, and coding journey.">
+
+  <!-- Connects the CSS file to this page.
+       The path "css/style.css" means: inside the "css" folder, the file "style.css".
+       Keep this file structure:
+         index.html
+         css/style.css -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- Skip link: helps keyboard users jump past the menu straight to the content -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ============================================================
+       THEME SWITCH (CSS only, no JavaScript)
+       This hidden checkbox remembers if the dark theme is on.
+       The label in the header (below) is the button people click.
+       IMPORTANT: this checkbox must stay right before the "page" div.
+       Light theme is the default (the checkbox starts unchecked).
+       ============================================================ -->
+  <input type="checkbox" id="theme-toggle" class="theme-checkbox">
+
+  <!-- Everything visible on the website lives inside this wrapper -->
+  <div class="page" id="top">
+
+    <!-- ==========================================================
+         HEADER + NAVIGATION (stays at the top while scrolling)
+         Each link uses href="#section-id" to jump to a section.
+         ========================================================== -->
+    <header class="site-header">
+      <div class="header-inner">
+
+        <!-- Text-based logo -->
+        <a class="logo" href="#home">
+          <span class="logo-symbol" aria-hidden="true">&lt;/&gt;</span>
+          <span class="logo-text">Team Vibes Coding</span>
+        </a>
+
+        <!-- Main menu: one list item (li) for each link.
+             On phones the menu is hidden. The id "site-menu" lets the
+             hamburger button below open it (see the CSS, section 4). -->
+        <nav class="main-nav" id="site-menu" aria-label="Main navigation">
+          <ul class="nav-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#journey">Journey</a></li>
+            <li><a href="#learning">Learning</a></li>
+            <li><a href="#values">Values</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- PHONE MENU BUTTONS (CSS only, no JavaScript).
+             The hamburger button links to #site-menu. When the address ends
+             with #site-menu, the CSS ":target" rule opens the menu.
+             The X button links to a name that does not exist (#close-menu),
+             so the menu closes and the page does not scroll.
+             Tapping a menu link also closes the menu.
+             These two buttons are hidden on tablets and computers.
+             (They must stay AFTER the nav, because the CSS uses "~".) -->
+        <a class="menu-open" href="#site-menu" aria-label="Open menu"></a>
+        <a class="menu-close" href="#close-menu" aria-label="Close menu"></a>
+
+        <!-- Clicking this label ticks or unticks the hidden checkbox above -->
+        <label for="theme-toggle" class="theme-switch">Dark / Light</label>
+
+      </div>
+    </header>
+
+
+    <main id="main-content">
+
+      <!-- ========================================================
+           HOME (hero section)
+           The h1 is the main heading of the whole page.
+           Use only ONE h1 per page.
+           ======================================================== -->
+      <section class="hero" id="home">
+        <div class="hero-content">
+
+          <!-- Left side: the text -->
+          <div class="hero-text">
+
+          <p class="hero-logo">
+            <span class="logo-symbol" aria-hidden="true">&lt;/&gt;</span>
+            Team Vibes Coding
+          </p>
+
+          <h1 class="hero-title">Building Ideas, One Line of Code at a Time.</h1>
+
+          <p class="hero-intro">
+            We are three first-year BSIT students from DNSC - Island Garden City
+            of Samal Campus, learning web development and building projects together.
+          </p>
+
+          <!-- This tagline will get the typing animation in the CSS -->
+          <p class="hero-tagline">Three Developers. One Team. Endless Possibilities.</p>
+
+          <!-- Buttons are links (a) that are styled to look like buttons -->
+          <div class="hero-buttons">
+            <a class="button button-primary" href="#team">Explore Our Team</a>
+            <a class="button button-outline" href="#projects">View Our Projects</a>
+          </div>
+
+          </div> <!-- end of .hero-text -->
+
+          <!-- Right side: a small decorative "code window".
+               It is only for looks (aria-hidden hides it from screen readers)
+               and it only shows on wide screens. -->
+          <div class="hero-visual" aria-hidden="true">
+            <div class="code-window">
+              <div class="code-bar">
+                <span class="dot dot-amber"></span>
+                <span class="dot dot-green"></span>
+                <span class="dot dot-teal"></span>
+                <span class="code-file">index.html</span>
+              </div>
+<pre class="code-body"><span class="c-tag">&lt;main&gt;</span>
+  <span class="c-tag">&lt;h1&gt;</span>Team Vibes Coding<span class="c-tag">&lt;/h1&gt;</span>
+  <span class="c-tag">&lt;p&gt;</span>Three Developers.<span class="c-tag">&lt;/p&gt;</span>
+  <span class="c-tag">&lt;p&gt;</span>One Team.<span class="c-tag">&lt;/p&gt;</span>
+  <span class="c-tag">&lt;a</span> <span class="c-attr">href</span>=<span class="c-str">"#team"</span><span class="c-tag">&gt;</span>
+    Explore Our Team
+  <span class="c-tag">&lt;/a&gt;</span>
+<span class="c-tag">&lt;/main&gt;</span></pre>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ========================================================
+           01 / ABOUT US
+           ======================================================== -->
+      <section class="section" id="about">
+        <div class="container">
+
+         
+          <h2 class="section-title">Who We Are</h2>
+
+          <div class="about-layout">
+
+            <!-- Left side: the main text -->
+            <div class="about-text">
+              <!-- EDIT: you can rewrite these paragraphs in your own words. -->
+              <h3>Who We Are</h3>
+              <p>
+                Team Vibes Coding is a team of three first-year Bachelor of Science in
+                Information Technology (BSIT) students at <a href="https://www.facebook.com/dnsc.igacos" target="_blank" rel="noopener">DNSC - Island Garden City of Samal Campus</a>.
+                We are beginner web developers who learn and build together.
+              </p>
+
+              <h3>Our Purpose</h3>
+              <p>
+                We formed this team to practice coding, share what we learn, and build
+                websites that we can be proud of. This portfolio shows our team and our
+                progress as beginner developers.
+              </p>
+
+              <h3>Our Goals</h3>
+              <ul>
+                <li>Understand how HTML and CSS work.</li>
+                <li>Build projects together as a team.</li>
+                <li>Improve our skills a little every day.</li>
+              </ul>
+
+              <h3>Our Interests and Journey</h3>
+              <p>
+                We are interested in technology, web design, and how websites are made.
+                Our journey has just started, and we are excited to see how far we can go.
+              </p>
+            </div>
+
+            <!-- Right side: a small "at a glance" card -->
+            <aside class="about-card">
+              <h3>At a Glance</h3>
+              <ul class="glance-list">
+                <li><strong>Team:</strong> 3 members</li>
+                <li><strong>Focus:</strong> Web development</li>
+                <li><strong>Level:</strong> Beginner (1st year)</li>
+                <li><strong>Course:</strong> BSIT</li>
+                <li><strong>School:</strong> DNSC - IGaCOS</li>
+                <li><strong>Stack:</strong> HTML + CSS</li>
+              </ul>
+            </aside>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ========================================================
+           02 / OUR TEAM
+           Three cards. Each "View Profile" link jumps to that
+           member's profile in the next section (see the ids
+           profile-john, profile-lyca, profile-cris).
+           ======================================================== -->
+      <section class="section" id="team">
+        <div class="container">
+
+          
+          <h2 class="section-title">Meet the Developers</h2>
+
+          <div class="card-grid">
+
+            <!-- Team card: John Michael Villarosa -->
+            <article class="team-card">
+              <!-- PHOTO: the picture file is images/Villa.jpg.
+                   To change it, replace that file (keep the same name) or change the name in src="..." -->
+             <img class="team-photo" src="images/Villa.jpg" alt="Photo of John Michael Villarosa">
+              <h3 class="team-name">John Michael Villarosa</h3>
+              <p class="team-role">BSIT Student | Beginner Web Developer</p>
+              <p class="team-intro">First-year BSIT student at DNSC - IGaCOS and a member of Team Vibes Coding.</p>
+              <a class="button button-primary" href="#profile-john">View Profile</a>
+            </article>
+
+            <!-- Team card: Lyca Cavs Del Rosario -->
+            <article class="team-card">
+              <!-- PHOTO: the picture file is images/Lyca.jpg -->
+              <img class="team-photo" src="images/Lyca.jpg" alt="Photo of Lyca Cavs Del Rosario">
+              <h3 class="team-name">Lyca Cavs Del Rosario</h3>
+              <p class="team-role">BSIT Student | Beginner Web Developer</p>
+              <p class="team-intro">First-year BSIT student at DNSC - IGaCOS and a member of Team Vibes Coding.</p>
+              <a class="button button-primary" href="#profile-lyca">View Profile</a>
+            </article>
+
+            <!-- Team card: Cris Mathew Solis -->
+            <article class="team-card">
+              <!-- PHOTO: the picture file is images/CrisMathew.jpg -->
+              <img class="team-photo" src="images/CrisMathew.jpg" alt="Photo of Cris Mathew Solis">
+              <h3 class="team-name">Cris Mathew Solis</h3>
+              <p class="team-role">BSIT Student | Beginner Web Developer</p>
+              <p class="team-intro">First-year BSIT student at DNSC - IGaCOS and a member of Team Vibes Coding.</p>
+              <a class="button button-primary" href="#profile-cris">View Profile</a>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ========================================================
+           03 / MEMBER PROFILES
+           All three profiles use the SAME layout.
+           To edit a profile, change only the text inside it.
+           ======================================================== -->
+      <section class="section" id="profiles">
+        <div class="container">
+
+      
+          <h2 class="section-title">Get to Know Each Member</h2>
+
+          <!-- The grid puts the 3 profiles side by side on wide screens -->
+          <div class="profile-grid">
+
+          <!-- Profile: John Michael Villarosa -->
+          <article class="profile" id="profile-john">
+            <div class="profile-photo">
+              <img class="team-photo" src="images/Villa.jpg" alt="Photo of John Michael Villarosa">
+            </div>
+
+            <div class="profile-info">
+              <h3 class="profile-name">John Michael Villarosa</h3>
+              <p class="profile-role">BSIT Student | Beginner Web Developer</p>
+
+              <h4>Introduction</h4>
+              <p>John Michael is a first-year BSIT student and a member of Team Vibes Coding, learning web development with HTML and CSS.</p>
+
+              <h4>Studies</h4>
+              <p>
+                Bachelor of Science in Information Technology (BSIT), First Year<br>
+                <a href="https://www.facebook.com/dnsc.igacos" target="_blank" rel="noopener">DNSC - Island Garden City of Samal Campus</a>
+              </p>
+
+              <h4>Skills</h4>
+              <ul class="tag-list">
+                <li>HTML5 (learning)</li>
+                <li>CSS3 (learning)</li>
+              </ul>
+
+
+
+              <!-- REMOVED FOR NOW (too tall for one screen).
+                   To bring these parts back, remove the comment marks around them (up to "END OF REMOVED PART").
+
+              <h4>Technologies</h4>
+              <ul class="tag-list">
+                <li>Technology 1 (placeholder)</li>
+                <li>Technology 2 (placeholder)</li>
+              </ul>
+
+              <h4>Personal Projects</h4>
+              <p>Project name and short description (placeholder).</p>
+
+              <h4>Links</h4>
+              EDIT: replace each "#" with the real link (for example your GitHub page)
+              <ul class="link-list">
+                <li><a href="#">GitHub (placeholder)</a></li>
+                <li><a href="#">Social Media (placeholder)</a></li>
+              </ul>
+
+                   END OF REMOVED PART -->
+
+              <a class="button button-outline" href="#team">Back to Team</a>
+            </div>
+          </article>
+
+          <!-- Profile: Lyca Cavs Del Rosario -->
+          <article class="profile" id="profile-lyca">
+            <div class="profile-photo">
+              <img class="team-photo" src="images/Lyca.jpg" alt="Photo of Lyca Cavs Del Rosario">
+            </div>
+
+            <div class="profile-info">
+              <h3 class="profile-name">Lyca Cavs Del Rosario</h3>
+              <p class="profile-role">BSIT Student | Beginner Web Developer</p>
+
+              <h4>Introduction</h4>
+              <p>Lyca is a first-year BSIT student and a member of Team Vibes Coding, learning web development with HTML and CSS.</p>
+
+              <h4>Studies</h4>
+              <p>
+                Bachelor of Science in Information Technology (BSIT), First Year<br>
+                <a href="https://www.facebook.com/dnsc.igacos" target="_blank" rel="noopener">DNSC - Island Garden City of Samal Campus</a>
+              </p>
+
+              <h4>Skills</h4>
+              <ul class="tag-list">
+                <li>HTML5 (learning)</li>
+                <li>CSS3 (learning)</li>
+              </ul>
+
+              <!-- REMOVED FOR NOW (too tall for one screen).
+                   To bring these parts back, remove the comment marks around them (up to "END OF REMOVED PART").
+
+              <h4>Technologies</h4>
+              <ul class="tag-list">
+                <li>Technology 1 (placeholder)</li>
+                <li>Technology 2 (placeholder)</li>
+              </ul>
+
+              <h4>Personal Projects</h4>
+              <p>Project name and short description (placeholder).</p>
+
+              <h4>Links</h4>
+              <ul class="link-list">
+                <li><a href="#">GitHub (placeholder)</a></li>
+                <li><a href="#">Social Media (placeholder)</a></li>
+              </ul>
+
+                   END OF REMOVED PART -->
+
+              <a class="button button-outline" href="#team">Back to Team</a>
+            </div>
+          </article>
+
+          <!-- Profile: Cris Mathew Solis -->
+          <article class="profile" id="profile-cris">
+            <div class="profile-photo">
+              <img class="team-photo" src="images/CrisMathew.jpg" alt="Photo of Cris Mathew Solis">
+            </div>
+
+            <div class="profile-info">
+              <h3 class="profile-name">Cris Mathew Solis</h3>
+              <p class="profile-role">BSIT Student | Beginner Web Developer</p>
+
+              <h4>Introduction</h4>
+              <p>Cris Mathew is a first-year BSIT student and a member of Team Vibes Coding, learning web development with HTML and CSS.</p>
+
+              <h4>Studies</h4>
+              <p>
+                Bachelor of Science in Information Technology (BSIT), First Year<br>
+                <a href="https://www.facebook.com/dnsc.igacos" target="_blank" rel="noopener">DNSC - Island Garden City of Samal Campus</a>
+              </p>
+
+              <h4>Skills</h4>
+              <ul class="tag-list">
+                <li>HTML5 (learning)</li>
+                <li>CSS3 (learning)</li>
+              </ul>
+
+              <!-- REMOVED FOR NOW (too tall for one screen).
+                   To bring these parts back, remove the comment marks around them (up to "END OF REMOVED PART").
+
+              <h4>Technologies</h4>
+              <ul class="tag-list">
+                <li>Technology 1 (placeholder)</li>
+                <li>Technology 2 (placeholder)</li>
+              </ul>
+
+              <h4>Personal Projects</h4>
+              <p>Project name and short description (placeholder).</p>
+
+              <h4>Links</h4>
+              <ul class="link-list">
+                <li><a href="#">GitHub (placeholder)</a></li>
+                <li><a href="#">Social Media (placeholder)</a></li>
+              </ul>
+
+                   END OF REMOVED PART -->
+
+              <a class="button button-outline" href="#team">Back to Team</a>
+            </div>
+          </article>
+
+          </div> <!-- end of .profile-grid -->
+
+        </div>
+      </section>
+
+
+      <!-- ========================================================
+           04 / SKILLS AND TECHNOLOGIES
+           The skill levels are placeholders. The bar width is set
+           by the number in style="width: 0%;". Change 0% to your
+           real level when you are ready (for example 40%).
+           ======================================================== -->
+      <section class="section" id="skills">
+        <div class="container">
+
+          
+          <h2 class="section-title">What We Work With</h2>
+
+          <div class="card-grid">
+
+            <article class="skill-card">
+              <h3>HTML5</h3>
+              <p class="skill-level">Level: Beginner (30%)</p>
+              <div class="skill-bar">
+                <div class="skill-bar-fill" style="width: 30%;"></div>
+              </div>
+              <p>We use HTML5 to build the structure of our pages, like headings, sections, and links.</p>
+            </article>
+
+            <article class="skill-card">
+              <h3>CSS3</h3>
+              <p class="skill-level">Level: Beginner (20%)</p>
+              <div class="skill-bar">
+                <div class="skill-bar-fill" style="width: 20%;"></div>
+              </div>
+              <p>We use CSS3 to style our pages: colors, spacing, layouts, and simple animations.</p>
+            </article>
+
+            <!-- JavaScript has NO level bar because we have not started learning it yet -->
+            <article class="skill-card">
+              <h3>JavaScript</h3>
+             
+              <p>
+                We plan to learn JavaScript in the future.
+                This website does not use it.
+              </p>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ========================================================
+           05 / OUR PROJECTS
+           These are SAMPLE cards. Replace them with real projects.
+           To add a project: copy one <article> block and paste it
+           below the last one.
+           ======================================================== -->
+      <section class="section" id="projects">
+        <div class="container">
+
+          
+          <h2 class="section-title">What We Are Building</h2>
+
+          <div class="card-grid">
+
+            <article class="project-card">
+  <!-- Project image: palitan ng screenshot ng website ninyo (tingnan ang tip sa ibaba) -->
+  <img class="project-image" src="images/project-portfolio.jpg" alt="Screenshot of the Team Vibes Coding portfolio website">
+  <div class="project-body">
+    <h3>Team Vibes Coding Portfolio Website</h3>
+    <p>Our team portfolio website. We built it to practice HTML and CSS and to introduce our team.</p>
+    <p class="project-tech-label">Technologies used:</p>
+    <ul class="tag-list">
+      <li>HTML5</li>
+      <li>CSS3</li>
+    </ul>
+    <!-- Palitan ang "#home" ng GitHub o live link kapag nai-upload na ninyo ang website -->
+    <a class="button button-primary" href="#home">View Project</a>
+  </div>
+</article>
+               <!-- ========================================================
+            <article class="project-card">
+              <div class="project-image-placeholder">Project Image</div>
+              <div class="project-body">
+                <h3>Sample Project 2 (Placeholder)</h3>
+                <p>Short project description (placeholder).</p>
+                <p class="project-tech-label">Technologies used:</p>
+                <ul class="tag-list">
+                  <li>Technology (placeholder)</li>
+                </ul>
+                <a class="button button-primary" href="#">View Project</a>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div class="project-image-placeholder">Project Image</div>
+              <div class="project-body">
+                <h3>Sample Project 3 (Placeholder)</h3>
+                <p>Short project description (placeholder).</p>
+                <p class="project-tech-label">Technologies used:</p>
+                <ul class="tag-list">
+                  <li>Technology (placeholder)</li>
+                </ul>
+                <a class="button button-primary" href="#">View Project</a>
+              </div>
+            </article>
+            ======================================================== -->
+          </div>
+        </div>
+      </section>
+  
+
+      <!-- ========================================================
+           06 / OUR CODING JOURNEY
+           An ordered list (ol) is used as the timeline.
+           To add a milestone: copy one <li> block and paste it
+           at the end of the list.
+           The milestone titles are only suggestions. CONFIRM each one,
+           then write the real date and note. Edit or delete any
+           milestone that is not true for your team.
+           Only write dates and notes for milestones you have
+           really reached.
+           ======================================================== -->
+      <section class="section" id="journey">
+        <div class="container">
+
+        
+          <h2 class="section-title">How We Are Growing</h2>
+
+          <ol class="timeline">
+
+            <li class="timeline-item">
+              <h3>Starting Our Coding Journey</h3>
+              <p class="timeline-date">Where we started</p>
+              <p>We began our BSIT studies as first-year students at DNSC - IGaCOS.</p>
+            </li>
+
+            <li class="timeline-item">
+              <h3>Learning HTML</h3>
+              <p class="timeline-date">Learning now</p>
+              <p>We are learning how to build the structure of web pages with HTML5.</p>
+            </li>
+
+            <li class="timeline-item">
+              <h3>Exploring CSS</h3>
+              <p class="timeline-date">Exploring now</p>
+              <p>We are exploring how CSS controls colors, spacing, and layouts.</p>
+            </li>
+
+            <li class="timeline-item">
+              <h3>Building Our First Website</h3>
+              <p class="timeline-date">Our first project</p>
+              <p>This team portfolio website is our project to practice what we learn.</p>
+            </li>
+
+            <li class="timeline-item">
+              <h3>Creating Team Projects</h3>
+              <p class="timeline-date">Coming next</p>
+              <p>We plan to build more projects together as a team.</p>
+            </li>
+
+            <li class="timeline-item">
+              <h3>Improving Our Skills</h3>
+              <p class="timeline-date">Every day</p>
+              <p>We keep practicing and learning a little every day.</p>
+            </li>
+
+          </ol>
+        </div>
+      </section>
+
+
+      <!-- ========================================================
+           07 / CURRENTLY LEARNING
+           CONFIRM each topic with the team. Delete any card that is not true.
+           OPTIONAL: to show a status, add one of these lines under the <h3>:
+           <span class="badge badge-learning">Currently Learning</span>
+           <span class="badge badge-plan">Plan to Learn</span>
+           When you have learned a topic well, you can move it to
+           the Skills section.
+           ======================================================== -->
+      <section class="section" id="learning">
+        <div class="container">
+
+          
+          <h2 class="section-title">What We Are Studying Now</h2>
+
+          <div class="card-grid">
+
+            <article class="learning-card">
+              <span class="learning-label" aria-hidden="true">HTML</span>
+              <h3>HTML5</h3>
+              <p>The language that gives a web page its structure, like headings, paragraphs, and images.</p>
+            </article>
+
+            <article class="learning-card">
+              <span class="learning-label" aria-hidden="true">CSS</span>
+              <h3>CSS3</h3>
+              <p>The language that controls colors, fonts, spacing, and the look of a page.</p>
+            </article>
+
+            <article class="learning-card">
+              <span class="learning-label" aria-hidden="true">JS</span>
+              <h3>JavaScript Fundamentals</h3>
+            
+              <p>We have not started yet. These are the basic ideas of programming that make websites interactive.</p>
+            </article>
+
+            <article class="learning-card">
+              <span class="learning-label" aria-hidden="true">RWD</span>
+              <h3>Responsive Web Design</h3>
+              <p>Making a website look good on phones, tablets, and computers.</p>
+            </article>
+
+            <article class="learning-card">
+              <span class="learning-label" aria-hidden="true">LAYOUT</span>
+              <h3>Website Layout</h3>
+              <p>Arranging sections, cards, and text so a page is neat and easy to read.</p>
+            </article>
+
+            <article class="learning-card">
+              <span class="learning-label" aria-hidden="true">UI/UX</span>
+              <h3>Basic UI/UX Design</h3>
+              <p>Designing pages that look nice and are easy for people to use.</p>
+            </article>
+
+            <article class="learning-card">
+              <span class="learning-label" aria-hidden="true">GIT</span>
+              <h3>Version Control with Git and GitHub</h3>
+              <p>Saving the history of our code and sharing it as a team.</p>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ========================================================
+           08 / TEAM VALUES
+           Five cards. The number inside value-icon is a simple
+           visual element that the CSS will turn into a small badge.
+           ======================================================== -->
+      <section class="section" id="values">
+        <div class="container">
+
+          
+          <h2 class="section-title">What Guides Us</h2>
+
+          <div class="card-grid">
+
+            <article class="value-card">
+              <span class="value-icon" aria-hidden="true">01</span>
+              <h3>Creativity</h3>
+              <p>We explore new ideas and create useful designs.</p>
+            </article>
+
+            <article class="value-card">
+              <span class="value-icon" aria-hidden="true">02</span>
+              <h3>Teamwork</h3>
+              <p>We help each other and work together to complete projects.</p>
+            </article>
+
+            <article class="value-card">
+              <span class="value-icon" aria-hidden="true">03</span>
+              <h3>Continuous Learning</h3>
+              <p>We improve our skills by learning and practicing.</p>
+            </article>
+
+            <article class="value-card">
+              <span class="value-icon" aria-hidden="true">04</span>
+              <h3>Problem Solving</h3>
+              <p>We learn how to understand problems and find solutions.</p>
+            </article>
+
+            <article class="value-card">
+              <span class="value-icon" aria-hidden="true">05</span>
+              <h3>Collaboration</h3>
+              <p>We share ideas, listen to suggestions, and support our teammates.</p>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ========================================================
+           09 / CONTACT
+           ======================================================== -->
+      <section class="section" id="contact">
+        <div class="container">
+
+      
+          <h2 class="section-title">Get in Touch</h2>
+
+          <div class="contact-layout">
+
+            <!-- Left side: email and social links -->
+            <div class="contact-info">
+              <p>
+                Want to say hello or ask about our work?
+                Send us an email. We would love to hear from you.
+              </p>
+
+              <!-- This email link works. A "mailto:" link opens the visitor's email app.
+                   EDIT: change the address if you want to use a different team email. -->
+              <p class="contact-email">
+                Email:
+                <a href="mailto:cocjohnmichael2008@gmail.com">cocjohnmichael2008@gmail.com</a>
+              </p>
+
+              <h3>Find Us Online</h3>
+              <!-- target="_blank" opens the link in a new tab.
+                   EDIT: add more links by copying one <li> line. -->
+              <ul class="link-list">
+                <li><a href="https://github.com/JOHN-code838" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="https://www.facebook.com/Villarosa0208" target="_blank" rel="noopener">Facebook</a></li>
+              </ul>
+            </div>
+
+            <!-- Right side: the contact form -->
+            <div class="contact-form-box">
+              <h3>Send Us a Message</h3>
+
+              <!-- HOW THIS FORM WORKS: HTML alone cannot send messages by itself.
+                   Here, action="mailto:..." makes the browser open the visitor's
+                   email app with the message already written. The visitor then
+                   presses Send in their email app.
+                   LATER (optional): to send messages straight to your inbox, sign up
+                   for a free form service (for example Formspree) and replace the
+                   action="..." below with the link they give you. -->
+              <form class="contact-form" action="mailto:cocjohnmichael2008@gmail.com" method="post" enctype="text/plain">
+
+                <div class="form-group">
+                  <label for="contact-name">Name</label>
+                  <input type="text" id="contact-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-email">Email</label>
+                  <input type="email" id="contact-email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-subject">Subject</label>
+                  <input type="text" id="contact-subject" name="subject" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-message">Message</label>
+                  <textarea id="contact-message" name="message" rows="5" required></textarea>
+                </div>
+
+                <button class="button button-primary" type="submit">Send Message</button>
+
+                <p class="form-note">
+                  When you press Send, your email app opens with your message ready to send.
+                  If nothing opens, please email us at
+                  <a href="mailto:cocjohnmichael2008@gmail.com">cocjohnmichael2008@gmail.com</a>.
+                </p>
+
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+
+    <!-- ==========================================================
+         FOOTER
+         ========================================================== -->
+    <footer class="site-footer">
+      <div class="container">
+
+        <div class="footer-columns">
+
+          <div class="footer-brand">
+            <p class="footer-logo">
+              <span class="logo-symbol" aria-hidden="true">&lt;/&gt;</span>
+              Team Vibes Coding
+            </p>
+            <p>Three Developers. One Team. Endless Possibilities.</p>
+          </div>
+
+          <nav class="footer-nav" aria-label="Footer navigation">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#team">Team</a></li>
+              <li><a href="#skills">Skills</a></li>
+              <li><a href="#projects">Projects</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </nav>
+
+          <div class="footer-social">
+            <h3>Follow Us</h3>
+            <ul>
+              <li><a href="https://github.com/JOHN-code838" target="_blank" rel="noopener">GitHub</a></li>
+              <li><a href="https://www.facebook.com/Villarosa0208" target="_blank" rel="noopener">Facebook</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2026 Team Vibes Coding. All rights reserved.</p>
+          <!-- "#top" jumps to the wrapper at the very top of the page -->
+          <a class="back-to-top" href="#top">Back to Top</a>
+        </div>
+
+      </div>
+    </footer>
+
+  </div> <!-- end of .page -->
+
+</body>
+
+</html>

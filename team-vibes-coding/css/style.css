@@ -1,0 +1,2238 @@
+/* =====================================================================
+   TEAM VIBES CODING - css/style.css
+   HTML5 + CSS3 only. No JavaScript.
+
+   HOW THIS FILE IS ORGANIZED
+   We write the MOBILE styles first. Then we use "@media (min-width: ...)"
+   to change things for bigger screens. "min-width: 900px" means:
+   "apply these rules when the screen is 900px wide OR MORE".
+
+   TABLE OF CONTENTS
+    1. Colors and theme (light and dark)
+    2. Basic reset and page defaults
+    3. Reusable parts (container, titles, buttons, badges, tags)
+    4. Header and navigation
+    5. Home (hero)
+    6. About Us
+    7. Our Team
+    8. Member Profiles
+    9. Skills and Technologies
+   10. Our Projects
+   11. Our Coding Journey
+   12. Currently Learning
+   13. Team Values
+   14. Contact
+   15. Footer
+   16. Cursor (the normal browser cursor)
+   17. Animations
+   18. Wide screens and section design
+   19. Extra design touches (shapes, icons, hover, fade-in)
+   20. Reduced motion (for people who prefer less animation)
+   ===================================================================== */
+
+
+/* =====================================================================
+   1. COLORS AND THEME
+   A "variable" like --forest-green stores a value once, so we can use it
+   many times with var(--forest-green). To change a color for the whole
+   website, change it here only.
+   ===================================================================== */
+
+/* Our official palette. These never change between light and dark. */
+:root {
+  --forest-green: #2D5A3D;      /* Primary: header, footer, hero, headings */
+  --deep-teal: #3D4A6B;         /* Secondary: cards */
+  --warm-amber: #C4883A;        /* Accent: buttons and highlights */
+  --warm-off-white: #F7F5F0;    /* Background in the light theme */
+
+  --ink: #1B2420;               /* Dark text used on top of amber */
+  --amber-light: #D69A4B;       /* Amber when a button is hovered */
+
+  /* Page width. The content grows with the screen, up to this limit.
+     (rem grows on very big screens, see "Basic reset" below.) */
+  --max-width: 82.5rem;
+  --gutter: clamp(1.25rem, 3.5vw, 2.5rem);   /* space at the left and right edges */
+}
+
+/* LIGHT THEME (this is the default).
+   These variables change with the theme, so we keep them on .page. */
+.page {
+  --page-bg: var(--warm-off-white);   /* main background */
+  --page-bg-alt: #EFECE4;             /* slightly darker background for every other section */
+  --surface: #FFFFFF;                 /* white boxes (profiles, project cards, form) */
+  --text-color: #1F2A24;              /* normal text */
+  --text-soft: #46524B;               /* lighter text */
+  --heading-color: var(--forest-green);
+  --label-color: var(--deep-teal);    /* small labels like "01 / ABOUT US" */
+  --link-color: var(--forest-green);
+  --chip-bg: #EFECE4;                 /* background of small tags */
+  --border-color: rgba(45, 90, 61, 0.18);
+  --input-border: #7A8A80;
+  --timeline-color: var(--forest-green);
+  --shadow: 0 4px 14px rgba(45, 90, 61, 0.12);
+  --shadow-hover: 0 12px 28px rgba(45, 90, 61, 0.22);
+  --pattern: rgba(45, 90, 61, 0.16);      /* soft decoration shapes in the sections */
+  --wash: rgba(45, 90, 61, 0.06);         /* very light green color wash on each section */
+  --accent-soft: rgba(196, 136, 58, 0.4); /* thin amber outline shapes */
+  --glow: rgba(196, 136, 58, 0.2);        /* soft amber glow */
+
+  background-color: var(--page-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* DARK THEME.
+   When the hidden checkbox (#theme-toggle) is ticked, we replace the
+   variables above with darker ones. The "~" means "a sibling that comes
+   after the checkbox", which is why the checkbox sits right before .page
+   in the HTML. */
+#theme-toggle:checked ~ .page {
+  --page-bg: #121A16;
+  --page-bg-alt: #18231D;
+  --surface: #1D2A23;
+  --text-color: #E9E7E0;
+  --text-soft: #B5BBB2;
+  --heading-color: #F7F5F0;           /* green is too dark to read on dark, so headings turn off-white */
+  --label-color: var(--warm-amber);
+  --link-color: var(--warm-amber);
+  --chip-bg: #26352C;
+  --border-color: rgba(255, 255, 255, 0.12);
+  --input-border: #6B7D72;
+  --timeline-color: #4F8B66;
+  --shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.6);
+  --pattern: rgba(255, 255, 255, 0.09);
+  --wash: rgba(79, 139, 102, 0.1);
+  --accent-soft: rgba(214, 154, 75, 0.35);
+  --glow: rgba(196, 136, 58, 0.18);
+
+  color-scheme: dark;                 /* makes form fields and scrollbars dark too */
+}
+
+/* Makes the area outside .page dark as well (for example when you
+   over-scroll on a phone). If a very old browser ignores this, nothing breaks. */
+body:has(#theme-toggle:checked) {
+  background-color: #121A16;
+}
+
+
+/* =====================================================================
+   2. BASIC RESET AND PAGE DEFAULTS
+   ===================================================================== */
+
+/* Resets the browser's default spacing so we start from zero.
+   "box-sizing: border-box" makes width include padding and border,
+   which makes sizes much easier to predict. */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Smooth scrolling when you click a link like href="#about" */
+  scroll-behavior: smooth;
+
+  /* The header is NOT sticky, so nothing covers the top of the screen.
+     A section starts at the very top when you jump to it. */
+  scroll-padding-top: 0;
+}
+
+/* Big monitors: everything that uses "rem" grows a little, so the page
+   does not look tiny with empty space on both sides. */
+@media (min-width: 1600px) {
+  html {
+    font-size: 112.5%;              /* 18px */
+  }
+}
+
+@media (min-width: 2200px) {
+  html {
+    font-size: 125%;                /* 20px */
+  }
+}
+
+body {
+  background-color: var(--warm-off-white);
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1rem;          /* 1rem = 16px, the normal browser text size */
+  line-height: 1.65;        /* space between lines of text */
+}
+
+h1, h2, h3, h4 {
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  color: var(--link-color);
+}
+
+/* Images never become wider than their box */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Visible keyboard focus: when someone presses the Tab key, they can
+   always see where they are. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--warm-amber);
+  outline-offset: 3px;
+}
+
+/* "Skip to main content" link: hidden until a keyboard user tabs to it */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;               /* moved above the screen */
+  z-index: 200;
+  padding: 0.6rem 1rem;
+  background-color: var(--warm-amber);
+  color: var(--ink);
+  font-weight: 700;
+  border-radius: 0 0 8px 8px;
+}
+
+.skip-link:focus {
+  top: 0;                   /* slides into view when focused */
+}
+
+
+/* =====================================================================
+   3. REUSABLE PARTS
+   These are used in many sections, so we write them only once.
+   ===================================================================== */
+
+/* The container keeps content in the middle and not too wide */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;           /* "auto" on left and right centers the box */
+  padding: 0 var(--gutter);
+}
+
+/* Every main section gets the same space above and below */
+.section {
+  padding: 4rem 0;
+
+  /* ONE SECTION PER SCREEN: each section is at least as tall as the
+     screen, and its content sits in the middle. "100svh" = 100% of the
+     screen height (the first line is a backup for old browsers). */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+/* Every other section gets a slightly different background.
+   To change which sections are shaded, edit this list of ids. */
+#team,
+#skills,
+#journey,
+#values {
+  background-color: var(--page-bg-alt);
+}
+
+/* Small label above each title, like "01 / ABOUT US" */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+  color: var(--label-color);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;   /* space between letters */
+  text-transform: uppercase;
+}
+
+/* A short amber line before the label */
+.section-label::before {
+  content: "";
+  width: 2rem;
+  height: 3px;
+  background-color: var(--warm-amber);
+}
+
+.section-title {
+  margin-bottom: 2.5rem;
+  color: var(--heading-color);
+  /* clamp(smallest, ideal, biggest): the size grows with the screen
+     but never goes below 1.75rem or above 2.5rem */
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+}
+
+/* ----- Buttons ----- */
+.button {
+  display: inline-block;
+  min-height: 44px;                 /* easy to tap on a phone */
+  padding: 0.7rem 1.5rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+              background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Main button: amber with dark text (good contrast) */
+.button-primary {
+  background-color: var(--warm-amber);
+  color: var(--ink);
+}
+
+.button-primary:hover {
+  background-color: var(--amber-light);
+  transform: translateY(-2px);      /* moves the button up a little */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* Second button: only an outline */
+.button-outline {
+  --outline-color: var(--heading-color);
+  --outline-hover-text: var(--page-bg);
+  border-color: var(--outline-color);
+  background-color: transparent;
+  color: var(--outline-color);
+}
+
+.button-outline:hover {
+  background-color: var(--outline-color);
+  color: var(--outline-hover-text);
+  transform: translateY(-2px);
+}
+
+/* A button feels "pressed" when clicked */
+.button:active {
+  transform: translateY(0);
+}
+
+/* The disabled button (the demo contact form) */
+.button:disabled {
+  opacity: 0.65;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ----- Badges (small rounded labels) ----- */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;             /* a very big radius makes a pill shape */
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* "Currently Learning" = filled amber */
+.badge-learning {
+  background-color: var(--warm-amber);
+  color: var(--ink);
+}
+
+/* "Plan to Learn" = dashed outline, so it looks different */
+.badge-plan {
+  border: 2px dashed rgba(255, 255, 255, 0.85);
+  color: #FFFFFF;
+}
+
+/* ----- Tag lists (small pills for skills and technologies) ----- */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;                  /* tags move to the next line if there is no room */
+  gap: 0.5rem;
+}
+
+.tag-list li {
+  padding: 0.25rem 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background-color: var(--chip-bg);
+  color: var(--text-color);
+  font-size: 0.9rem;
+}
+
+/* ----- Link lists ----- */
+.link-list li {
+  margin-bottom: 0.4rem;
+}
+
+.link-list a {
+  font-weight: 600;
+}
+
+/* ----- The teal cards ----- */
+/* The same look is shared by 5 kinds of cards: write once, use everywhere. */
+.about-card,
+.team-card,
+.skill-card,
+.learning-card,
+.value-card {
+  padding: 2rem 1.5rem;
+  border-radius: 14px;
+  background-color: var(--deep-teal);
+  color: #DDE2EE;                   /* soft white text */
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.about-card h3,
+.team-card h3,
+.skill-card h3,
+.learning-card h3,
+.value-card h3 {
+  color: #FFFFFF;
+}
+
+/* Hover effect: the card lifts up and the shadow grows.
+   (The About "at a glance" card is not clickable, so it stays still.) */
+.team-card:hover,
+.skill-card:hover,
+.learning-card:hover,
+.value-card:hover,
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ----- The grid that holds cards -----
+   "display: grid" puts items in rows and columns.
+   "1fr" means "one equal share of the space". */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;       /* mobile: 1 column */
+  gap: 1.5rem;
+}
+
+/* ----- Round photo placeholder (shows initials) ----- */
+.photo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 7rem;
+  height: 7rem;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;               /* 50% makes a perfect circle */
+  background-color: var(--forest-green);
+  color: #FFFFFF;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* If you add real photos later, these styles are ready for them */
+.team-photo {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  object-fit: cover;                /* crops the photo to fill the circle */
+}
+
+/* Logo badge: the </> symbol */
+.logo-symbol {
+  display: inline-block;
+  margin-right: 0.4rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 6px;
+  background-color: var(--warm-amber);
+  color: var(--ink);
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+/* Tablet: 2 columns */
+@media (min-width: 640px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section {
+    padding: 5rem 0;
+  }
+}
+
+/* Laptop and desktop: 3 columns */
+@media (min-width: 900px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .section {
+    padding: 5.5rem 0;
+  }
+}
+
+
+/* =====================================================================
+   4. HEADER AND NAVIGATION
+   The header is NOT sticky on any screen: it scrolls away with the page.
+   Phones (under 768px): logo, theme switch and a hamburger button in
+   one small row. The menu opens under it.
+   Tablets: logo and theme button on the first row, menu links below.
+   Wide screens: everything fits in one row.
+   ===================================================================== */
+
+.site-header {
+  position: relative;               /* the phone menu panel is placed under the header */
+  z-index: 100;                     /* the menu panel stays above the page content */
+  background-color: var(--forest-green);
+  color: #FFFFFF;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;                  /* items can move to a new row */
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  max-width: var(--max-width);      /* same width as the page content */
+  margin: 0 auto;
+  padding: 0.75rem var(--gutter);
+}
+
+/* "order" changes the order items appear in, without changing the HTML */
+.logo {
+  order: 1;
+  display: inline-flex;             /* lets us center the text and set a tap height */
+  align-items: center;
+  min-height: 44px;                 /* easy to tap on a phone */
+  color: #FFFFFF;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.theme-switch {
+  order: 2;
+}
+
+.main-nav {
+  order: 3;
+  width: 100%;                      /* the menu takes the whole second row */
+}
+
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.1rem;
+  margin-left: -0.5rem;             /* lines the first link up with the logo on phones */
+}
+
+.nav-list a {
+  display: block;
+  padding: 0.65rem 0.5rem;          /* smaller side space = fewer rows of links on phones */
+  border-bottom: 3px solid transparent;
+  border-radius: 6px 6px 0 0;
+  color: #FFFFFF;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* "Active-looking" links: highlight on hover and keyboard focus */
+.nav-list a:hover,
+.nav-list a:focus-visible {
+  border-bottom-color: var(--warm-amber);
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ----- The Dark / Light switch -----
+   The real checkbox is hidden. The label is the button people see. */
+.theme-checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;                       /* invisible, but keyboard users can still reach it */
+}
+
+.theme-switch {
+  position: relative;
+  user-select: none;                /* clicking the label no longer highlights the text */
+  -webkit-user-select: none;
+  min-height: 40px;
+  padding: 0.45rem 1rem 0.45rem 3.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  color: #FFFFFF;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+/* The small track of the switch */
+.theme-switch::before {
+  content: "";
+  position: absolute;
+  left: 0.7rem;
+  top: 50%;
+  width: 2.2rem;
+  height: 1.2rem;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%);
+}
+
+/* The round knob that slides */
+.theme-switch::after {
+  content: "";
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  background-color: var(--warm-amber);
+  transform: translateY(-50%);
+  transition: left 0.25s ease;
+}
+
+/* When the checkbox is ticked (dark theme), the knob moves to the right */
+#theme-toggle:checked ~ .page .theme-switch::after {
+  left: 1.9rem;
+}
+
+/* Show the keyboard focus ring on the label when the checkbox has focus */
+.theme-checkbox:focus-visible ~ .page .theme-switch {
+  outline: 3px solid var(--warm-amber);
+  outline-offset: 3px;
+}
+
+/* ----- Phone menu (screens narrower than 768px) -----
+   A hamburger button opens the menu list under the header.
+   It is CSS only. How it works:
+   - The button is a link to #site-menu.
+   - When the address ends with #site-menu, the nav is the ":target",
+     and "#site-menu:target" shows it.
+   - The "~" sign means "a later sibling": it lets the open button hide
+     and the X button appear when the menu is open.
+   - Tapping a menu link changes the address, so the menu closes by itself. */
+
+/* Computers and tablets do not need the buttons */
+.menu-open,
+.menu-close {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .header-inner {
+    flex-wrap: nowrap;              /* logo, theme switch and button stay in ONE row */
+    gap: 0.5rem;
+  }
+
+  /* The logo may use two lines on very small phones */
+  .logo {
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+
+  .logo-text {
+    min-width: 0;
+  }
+
+  /* The theme switch is only the small switch, without the words */
+  .theme-switch {
+    flex: none;
+    width: 3.6rem;
+    min-height: 44px;
+    padding: 0;
+    font-size: 0;                   /* hides the words but keeps them for screen readers */
+  }
+
+  /* Hamburger button (three lines drawn with gradients) */
+  .menu-open,
+  .menu-close {
+    order: 3;
+    position: relative;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+  }
+
+  .menu-open {
+    display: block;
+    background:
+      linear-gradient(#FFFFFF, #FFFFFF) center 14px / 20px 2px no-repeat,
+      linear-gradient(#FFFFFF, #FFFFFF) center 21px / 20px 2px no-repeat,
+      linear-gradient(#FFFFFF, #FFFFFF) center 28px / 20px 2px no-repeat;
+  }
+
+  .menu-open:hover,
+  .menu-close:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+
+  /* X button (two lines turned 45 degrees) */
+  .menu-close::before,
+  .menu-close::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 22px;
+    height: 2px;
+    background-color: #FFFFFF;
+  }
+
+  .menu-close::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .menu-close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  /* The menu panel: hidden until the hamburger is tapped */
+  .main-nav {
+    position: absolute;
+    top: 100%;                      /* right under the header */
+    left: 0;
+    right: 0;
+    display: none;
+    max-height: calc(100vh - 4.25rem);
+    max-height: calc(100svh - 4.25rem);
+    overflow-y: auto;               /* scrolls if the phone screen is very short */
+    background-color: #1C3A28;      /* a darker forest green */
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  #site-menu:target {
+    display: block;                 /* the menu is open */
+  }
+
+  #site-menu:target ~ .menu-open {
+    display: none;                  /* hide the hamburger ... */
+  }
+
+  #site-menu:target ~ .menu-close {
+    display: block;                 /* ... and show the X */
+  }
+
+  /* One link per row, easy to tap */
+  .nav-list {
+    display: block;
+    margin: 0;
+  }
+
+  .nav-list a {
+    padding: 1rem var(--gutter);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0;
+    font-size: 1rem;
+  }
+
+  .nav-list li:last-child a {
+    border-bottom: 0;
+  }
+
+  /* Short phone screens (for example 320 x 568): slightly smaller rows,
+     so all 9 links fit without scrolling inside the menu */
+  @media (max-height: 640px) {
+    .nav-list a {
+      padding: 0.8rem var(--gutter);
+    }
+  }
+
+  .nav-list a:hover,
+  .nav-list a:focus-visible {
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Wide screens (1200px and up): the menu fits in one row */
+@media (min-width: 1200px) {
+  html {
+    scroll-snap-type: y proximity;  /* the page gently "clicks" into place at each section */
+  }
+
+  /* The page clicks into place at the header (the top of the page)
+     and at the start of each section. The hero is NOT a snap point,
+     because it would hide the header when the page loads. */
+  .site-header,
+  .section {
+    scroll-snap-align: start;
+  }
+
+  .site-footer {
+    scroll-snap-align: start;
+  }
+
+  .main-nav {
+    order: 2;
+    width: auto;
+    flex: 1;                        /* takes the free space between logo and button */
+  }
+
+  .nav-list {
+    justify-content: center;
+    gap: 0.25rem;
+    margin-left: 0;
+  }
+
+  .nav-list a {
+    padding: 0.6rem 0.65rem;        /* keeps all 9 links in one row */
+  }
+
+  .theme-switch {
+    order: 3;
+  }
+}
+
+
+/* =====================================================================
+   5. HOME (HERO)
+   The hero text is aligned to the LEFT. This lets the typing animation
+   start from a fixed spot (centered text would "drift" while typing).
+   ===================================================================== */
+
+.hero {
+  position: relative;               /* lets us place the round shapes inside */
+  display: flex;
+  align-items: center;
+  /* The hero fills the first screen, so the next section is not visible
+     before you scroll. "7rem" is about the height of the header on a tablet.
+     The first line is a backup for old browsers that do not know "svh". */
+  min-height: calc(100vh - 7rem);
+  min-height: calc(100svh - 7rem);
+  padding: 4rem 0;
+  overflow: hidden;                 /* hides parts of the shapes outside the hero */
+  color: #FFFFFF;
+
+  /* Subtle moving background: a green gradient that slowly shifts */
+  background: linear-gradient(135deg, #2D5A3D, #3D6A4D, #2D5A3D);
+  background-size: 200% 200%;
+  animation: background-shift 16s ease-in-out infinite;
+}
+
+/* Two soft round shapes that float slowly (pure decoration) */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;             /* clicks pass through the shapes */
+}
+
+.hero::before {
+  top: -9rem;
+  right: -7rem;
+  width: 26rem;
+  height: 26rem;
+  background-color: rgba(196, 136, 58, 0.18);
+  animation: float-shape 14s ease-in-out infinite alternate;
+}
+
+.hero::after {
+  bottom: -8rem;
+  left: -6rem;
+  width: 20rem;
+  height: 20rem;
+  background-color: rgba(61, 74, 107, 0.4);
+  animation: float-shape 18s ease-in-out infinite alternate-reverse;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;                       /* keeps the text above the shapes */
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* The short intro animation: each part slides up and fades in, one after another */
+.hero-logo,
+.hero-title,
+.hero-intro,
+.hero-buttons {
+  animation: fade-up 0.7s ease both;
+}
+
+.hero-logo,
+.footer-logo {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.hero-logo {
+  margin-bottom: 1.25rem;
+}
+
+.hero-title {
+  max-width: 14em;
+  margin-bottom: 1.25rem;
+  color: #FFFFFF;
+  font-size: clamp(2.2rem, 6vw, 3.75rem);
+  animation-delay: 0.1s;
+}
+
+.hero-intro {
+  max-width: 34rem;
+  font-size: 1.15rem;
+  color: #EEF2EE;
+  animation-delay: 0.25s;
+}
+
+/* Tagline on phones: normal text that wraps and fades in.
+   (The typing animation needs a wide screen, see below.) */
+.hero-tagline {
+  margin-top: 1.5rem;
+  padding-left: 1rem;
+  border-left: 4px solid var(--warm-amber);
+  color: #FFFFFF;
+  font-size: 1.15rem;
+  font-weight: 600;
+  animation: fade-up 0.7s ease 0.4s both;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+  animation-delay: 0.6s;
+}
+
+/* Outline button on the green hero must be white, not green */
+.hero .button-outline {
+  --outline-color: #FFFFFF;
+  --outline-hover-text: var(--forest-green);
+}
+
+/* TYPING ANIMATION (tablet and bigger)
+   How it works:
+   - A monospace font gives every letter the same width.
+   - The tagline has exactly 50 characters, so its width is 50ch
+     ("ch" = the width of one character).
+   - We animate the width from 0 to 50ch in 50 steps, so one letter
+     appears at a time.
+   - "overflow: hidden" hides the letters that are not typed yet.
+   - The right border is the blinking cursor.
+   IF YOU CHANGE THE TAGLINE TEXT: count the new characters (spaces and
+   dots too) and change BOTH "50ch" and "steps(50)" below and in
+   the @keyframes typing. */
+@media (min-width: 640px) {
+  .hero-tagline {
+    box-sizing: content-box;        /* so the cursor border does not cut the last letter */
+    width: 50ch;
+    padding-left: 0;
+    border-left: none;
+    border-right: 3px solid var(--warm-amber);
+    overflow: hidden;
+    white-space: nowrap;            /* keeps the text on one line */
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.1rem;
+    animation: typing 2.8s steps(50) 0.6s both,
+               blink-cursor 0.8s step-end infinite;
+  }
+}
+
+
+/* =====================================================================
+   6. ABOUT US
+   ===================================================================== */
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr;       /* mobile: text first, then the card */
+  gap: 2rem;
+}
+
+.about-text h3 {
+  margin-top: 1.5rem;
+  color: var(--heading-color);
+  font-size: 1.2rem;
+}
+
+.about-text h3:first-child {
+  margin-top: 0;
+}
+
+.about-text ul {
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.about-text li {
+  margin-bottom: 0.35rem;
+}
+
+.about-card h3 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.glance-list li {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glance-list li:last-child {
+  border-bottom: none;
+}
+
+.glance-list strong {
+  color: #FFFFFF;
+}
+
+@media (min-width: 900px) {
+  .about-layout {
+    grid-template-columns: 2fr 1fr; /* text takes 2 parts, card takes 1 part */
+    gap: 3rem;
+    align-items: start;
+  }
+}
+
+
+/* =====================================================================
+   7. OUR TEAM
+   ===================================================================== */
+
+.team-card {
+  display: flex;
+  flex-direction: column;           /* stack the content from top to bottom */
+  align-items: center;
+  text-align: center;
+}
+
+.team-card .photo-placeholder,
+.team-card .team-photo {
+  margin-bottom: 1rem;
+}
+
+.team-name {
+  font-size: 1.3rem;
+}
+
+.team-role {
+  font-style: italic;
+}
+
+.team-intro {
+  flex-grow: 1;                     /* pushes the button to the bottom so all buttons line up */
+  margin-bottom: 1.5rem;
+}
+
+
+/* =====================================================================
+   8. MEMBER PROFILES
+   All three profiles share these styles, so they always look the same.
+   ===================================================================== */
+
+.profile {
+  display: grid;
+  grid-template-columns: 1fr;       /* mobile: photo on top, text below */
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 2rem 1.5rem;
+  border: 1px solid var(--border-color);
+  border-left: 6px solid var(--forest-green);
+  border-radius: 14px;
+  background-color: var(--surface);
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.25s ease;
+}
+
+.profile:last-child {
+  margin-bottom: 0;
+}
+
+/* A little space above a profile when you jump to it */
+.profile {
+  scroll-margin-top: 1.5rem;
+}
+
+/* When you click "View Profile", that profile gets an amber ring */
+.profile:target {
+  box-shadow: 0 0 0 3px var(--warm-amber);
+}
+
+.profile .photo-placeholder,
+.profile .team-photo {
+  width: 9rem;
+  height: 9rem;
+  margin: 0 auto;
+  font-size: 2.6rem;
+}
+
+.profile-name {
+  color: var(--heading-color);
+  font-size: 1.6rem;
+}
+
+.profile-role {
+  color: var(--text-soft);
+  font-style: italic;
+}
+
+/* Small headings inside a profile: Introduction, Skills, ... */
+.profile h4 {
+  margin-top: 1.25rem;
+  color: var(--label-color);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.profile .button {
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .profile {
+    grid-template-columns: 9rem 1fr; /* photo column + text column */
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .profile .photo-placeholder,
+  .profile .team-photo {
+    margin: 0;
+  }
+}
+
+
+/* =====================================================================
+   9. SKILLS AND TECHNOLOGIES
+   ===================================================================== */
+
+.skill-level {
+  font-size: 0.9rem;
+}
+
+/* The grey track of the progress bar */
+.skill-bar {
+  height: 0.7rem;
+  margin: 0.75rem 0 1rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* The amber part. Its width comes from style="width: 0%;" in the HTML. */
+.skill-bar-fill {
+  height: 100%;
+  border-radius: inherit;           /* copies the rounded corners from the track */
+  background-color: var(--warm-amber);
+  transition: width 0.6s ease;
+}
+
+
+/* =====================================================================
+   10. OUR PROJECTS
+   ===================================================================== */
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;                 /* keeps the image corners rounded */
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  background-color: var(--surface);
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Placeholder image area (diagonal stripes make it look like a placeholder) */
+.project-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 11rem;
+  background-color: var(--deep-teal);
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.07) 0,
+    rgba(255, 255, 255, 0.07) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  color: #FFFFFF;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: background-color 0.3s ease;
+}
+
+/* The image area turns green when you hover over the card */
+.project-card:hover .project-image-placeholder {
+  background-color: var(--forest-green);
+}
+
+/* A real project image (when you add one) */
+.project-image {
+  width: 100%;
+  height: 11rem;
+  object-fit: cover;
+}
+
+.project-body {
+  display: flex;
+  flex: 1;                          /* fills the rest of the card */
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+}
+
+.project-body h3 {
+  color: var(--heading-color);
+  font-size: 1.2rem;
+}
+
+.project-tech-label {
+  margin-bottom: 0;
+  color: var(--label-color);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.project-body .tag-list {
+  margin-bottom: 0.75rem;           /* a little room above the button */
+}
+
+.project-body .button {
+  align-self: flex-start;           /* the button keeps its own width */
+  margin-top: auto;                 /* and sits at the bottom of the card */
+}
+
+
+/* =====================================================================
+   11. OUR CODING JOURNEY
+   A vertical line on the left with a dot for each step.
+   To add a step, copy one <li> in the HTML. No CSS change is needed.
+   ===================================================================== */
+
+.timeline {
+  position: relative;
+  max-width: 46rem;
+  padding-left: 2rem;
+}
+
+/* The vertical Forest Green line */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0.55rem;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 4px;
+  border-radius: 2px;
+  background-color: var(--timeline-color);
+}
+
+.timeline-item {
+  position: relative;
+  padding: 0 0 2rem 1.25rem;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+/* The dot on the line */
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -2rem;
+  top: 0.25rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 4px solid var(--page-bg-alt);   /* a ring in the background color cuts the line around the dot */
+  border-radius: 50%;
+  background-color: var(--warm-amber);
+  transition: transform 0.2s ease;
+}
+
+.timeline-item:hover::before {
+  transform: scale(1.25);
+}
+
+.timeline-item h3 {
+  color: var(--heading-color);
+  font-size: 1.2rem;
+}
+
+.timeline-date {
+  margin-bottom: 0.25rem;
+  color: var(--label-color);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* BONUS: in browsers that support it, each step fades in as you scroll
+   down to it. Other browsers simply show the steps normally. */
+@supports (animation-timeline: view()) {
+  .timeline-item {
+    animation: fade-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+}
+
+
+/* =====================================================================
+   12. CURRENTLY LEARNING
+   ===================================================================== */
+
+.learning-card {
+  border-left: 5px solid var(--warm-amber);
+}
+
+/* Small text label at the top of each card, such as HTML or CSS */
+.learning-label {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.learning-card h3 {
+  font-size: 1.15rem;
+}
+
+.learning-card .badge {
+  margin: 0.25rem 0 0.75rem;
+}
+
+
+/* =====================================================================
+   13. TEAM VALUES (the Learning cards use the same idea)
+   The cards always fill the whole row, so there is no empty space at
+   the sides and nothing sits alone in the middle.
+   - Values (5 cards): 3 on the first row, 2 wider cards on the second.
+   - Learning (7 cards): 4 on the first row, 3 wider cards on the second.
+   On phones every card takes the full width.
+   ===================================================================== */
+
+/* The numbered circle on each card */
+.value-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background-color: var(--warm-amber);
+  color: var(--ink);
+  font-weight: 800;
+  transition: transform 0.25s ease;
+}
+
+.value-card:hover .value-icon {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+/* Tablet: 2 columns. The last card (an odd one out) stretches over the full row. */
+@media (min-width: 640px) {
+  #values .card-grid,
+  #learning .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #values .value-card:last-child,
+  #learning .learning-card:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Laptop: Values = 3 + 2 (we use 6 small columns, so 2 cards can each take 3) */
+@media (min-width: 900px) {
+  #values .card-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  #values .value-card {
+    grid-column: span 2;                  /* first 3 cards: 2 of 6 columns each */
+  }
+
+  #values .value-card:nth-child(n+4) {
+    grid-column: span 3;                  /* last 2 cards: 3 of 6 columns each */
+  }
+
+  #learning .card-grid {
+    grid-template-columns: repeat(3, 1fr);  /* 3 + 3 + 1 wide card */
+  }
+}
+
+/* Desktop: Learning = 4 + 3 (we use 12 small columns) */
+@media (min-width: 1100px) {
+  #learning .card-grid {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  #learning .learning-card {
+    grid-column: span 3;                  /* first 4 cards: 3 of 12 columns each */
+  }
+
+  #learning .learning-card:nth-child(n+5) {
+    grid-column: span 4;                  /* last 3 cards: 4 of 12 columns each */
+  }
+}
+
+
+/* =====================================================================
+   14. CONTACT
+   ===================================================================== */
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+.contact-info h3 {
+  margin-top: 1.5rem;
+  color: var(--heading-color);
+  font-size: 1.2rem;
+}
+
+/* Long email addresses may wrap on small phones instead of overflowing */
+.contact-info a {
+  overflow-wrap: anywhere;
+}
+
+.contact-form-box {
+  padding: 2rem 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  background-color: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.contact-form-box h3 {
+  margin-bottom: 1.25rem;
+  color: var(--heading-color);
+  font-size: 1.3rem;
+}
+
+.form-group {
+  margin-bottom: 1.1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--input-border);
+  border-radius: 8px;
+  background-color: var(--page-bg);
+  color: var(--text-color);
+  font: inherit;                    /* uses the same font as the rest of the page */
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--warm-amber);
+}
+
+.form-group textarea {
+  resize: vertical;                 /* people can make it taller, not wider */
+}
+
+/* The honest "demo only" note */
+.form-note {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--warm-amber);
+  background-color: var(--chip-bg);
+  color: var(--text-color);
+  font-size: 0.9rem;
+}
+
+@media (min-width: 900px) {
+  .contact-layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .contact-form-box {
+    padding: 2rem;
+  }
+}
+
+
+/* =====================================================================
+   15. FOOTER
+   ===================================================================== */
+
+.site-footer {
+  padding: 3.5rem 0 1.5rem;
+  background-color: var(--forest-green);
+  color: #FFFFFF;
+}
+
+.footer-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.footer-logo {
+  margin-bottom: 0.75rem;
+}
+
+.footer-brand p {
+  color: #E4ECE6;
+}
+
+.site-footer h3 {
+  margin-bottom: 0.75rem;
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.site-footer li {
+  margin-bottom: 0.4rem;
+}
+
+.site-footer a {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.footer-nav a:hover,
+.footer-social a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--warm-amber);
+  text-underline-offset: 4px;       /* space between the text and the underline */
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 0.9rem;
+}
+
+.footer-bottom p {
+  margin-bottom: 0;
+}
+
+.back-to-top {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--warm-amber);
+  border-radius: 8px;
+  font-weight: 700;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.site-footer .back-to-top:hover {
+  background-color: var(--warm-amber);
+  color: var(--ink);
+}
+
+@media (min-width: 900px) {
+  .footer-columns {
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+
+/* =====================================================================
+   16. CURSOR
+   We use the normal cursor of the browser (the arrow, the hand over
+   links, and the text cursor in form fields). No custom cursor.
+   ===================================================================== */
+
+
+/* =====================================================================
+   17. ANIMATIONS
+   A @keyframes block describes how something changes over time.
+   ===================================================================== */
+
+/* Slide up a little while fading in */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The typing effect: width grows from 0 to 50 characters */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 50ch;
+  }
+}
+
+/* The blinking cursor: the border becomes see-through halfway through */
+@keyframes blink-cursor {
+  50% {
+    border-right-color: transparent;
+  }
+}
+
+/* The hero background slowly moves */
+@keyframes background-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* The round shapes drift a little */
+@keyframes float-shape {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-2rem, 2rem);
+  }
+}
+
+
+/* =====================================================================
+   18. WIDE SCREENS AND SECTION DESIGN
+   Every section gets its own small decoration and the cards get a
+   colored edge. On wide screens the hero and the profiles use the
+   free space, and the timeline switches to a two-sided layout.
+   ===================================================================== */
+
+/* ----- Section decorations -----
+   Each section has ONE soft shape (dots, stripes, rings or a glow).
+   The shape sits behind the text and fades out toward its edges. */
+.section {
+  position: relative;
+  overflow: hidden;                 /* hides the part of a shape outside the section */
+}
+
+.section > .container {
+  position: relative;
+  z-index: 1;                       /* keeps the content above the shapes */
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: 16rem;
+  height: 16rem;
+  pointer-events: none;             /* clicks pass through the shapes */
+}
+
+/* Dots */
+#about::before,
+#profiles::before,
+#journey::before {
+  background-image: radial-gradient(var(--pattern) 2px, transparent 2px);
+  background-size: 20px 20px;
+  -webkit-mask-image: radial-gradient(closest-side, #000 35%, transparent);
+  mask-image: radial-gradient(closest-side, #000 35%, transparent);
+}
+
+/* Diagonal stripes */
+#skills::before,
+#values::before {
+  background-image: repeating-linear-gradient(45deg, var(--pattern) 0, var(--pattern) 2px, transparent 2px, transparent 14px);
+  -webkit-mask-image: radial-gradient(closest-side, #000 35%, transparent);
+  mask-image: radial-gradient(closest-side, #000 35%, transparent);
+}
+
+/* Rings */
+#team::before,
+#projects::before,
+#contact::before {
+  border: 2px solid var(--pattern);
+  border-radius: 50%;
+  outline: 2px solid var(--pattern);
+  outline-offset: 1.5rem;
+}
+
+/* Amber glow */
+#learning::before {
+  width: 28rem;
+  height: 28rem;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--glow), transparent);
+}
+
+/* Where each shape sits */
+#about::before    { top: 2rem;     right: -3rem; }
+#team::before     { bottom: -5rem; left: -5rem; }
+#profiles::before { bottom: 2rem;  right: -3rem; }
+#skills::before   { top: 1.5rem;   left: -3rem; }
+#projects::before { top: -4rem;    right: -4rem; }
+#journey::before  { bottom: 2rem;  left: -3rem; }
+#learning::before { bottom: -9rem; right: -9rem; }
+#values::before   { top: 2rem;     right: -3rem; }
+#contact::before  { bottom: -5rem; left: -5rem; }
+
+/* ----- Card edges: a colored line on one side of each kind of card ----- */
+.about-card,
+.team-card {
+  border-top: 4px solid var(--warm-amber);
+}
+
+.skill-card {
+  border-top: 4px solid #4F8B66;
+}
+
+.value-card {
+  border-bottom: 4px solid var(--warm-amber);
+}
+
+.project-card {
+  border-top: 4px solid var(--timeline-color);
+}
+
+/* ----- Hero code window (hidden on phones and tablets) ----- */
+.hero-visual {
+  display: none;
+}
+
+.code-window {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  background-color: #141E19;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.code-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.75rem 1rem;
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+.dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+}
+
+.dot-amber { background-color: var(--warm-amber); }
+.dot-green { background-color: #4F8B66; }
+.dot-teal  { background-color: #7F8DB8; }
+
+.code-file {
+  margin-left: 0.5rem;
+  color: #B5BBB2;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.85rem;
+}
+
+.code-body {
+  padding: 1.5rem;
+  overflow-x: auto;
+  color: #E9E7E0;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.95rem;
+  line-height: 1.9;
+}
+
+.c-tag  { color: var(--amber-light); }
+.c-attr { color: #8FC3A0; }
+.c-str  { color: #C9D3F0; }
+
+/* ----- Member profiles: a grid so the cards can sit side by side ----- */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.profile-grid .profile {
+  margin-bottom: 0;
+}
+
+/* The button sits at the bottom, so the 3 cards look even */
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-info .tag-list,
+.profile-info .link-list {
+  margin-bottom: 1.5rem;            /* space above the button */
+}
+
+.profile .button {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+/* ----- Timeline on tablets and bigger: a center line, cards left and right ----- */
+@media (min-width: 900px) {
+  .timeline {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding-left: 0;
+  }
+
+  .timeline::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .timeline-item {
+    width: 50%;
+    padding: 0 3rem 2.5rem 0;
+    text-align: right;              /* odd steps sit on the left */
+  }
+
+  .timeline-item:nth-child(even) {
+    margin-left: 50%;
+    padding: 0 0 2.5rem 3rem;
+    text-align: left;               /* even steps sit on the right */
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+
+  /* Each step starts a little higher than the end of the one before it.
+     Because the steps are on opposite sides, they interleave and the
+     timeline is shorter (it fits the screen better). */
+  .timeline-item + .timeline-item {
+    margin-top: -4rem;
+  }
+
+  .timeline-item::before {
+    left: auto;
+    right: -0.65rem;                /* puts the dot on the center line */
+  }
+
+  .timeline-item:nth-child(even)::before {
+    right: auto;
+    left: -0.65rem;
+  }
+}
+
+/* ----- Wide screens: use the free space ----- */
+@media (min-width: 1200px) {
+  /* The hero fills the first screen under the header */
+  .hero {
+    min-height: calc(100vh - 4.25rem);
+    min-height: calc(100svh - 4.25rem);
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;   /* text 55%, code window 45% */
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .hero-visual {
+    display: block;
+    animation: fade-up 0.8s ease 0.5s both;
+  }
+
+  .profile-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .profile-grid .profile {
+    grid-template-columns: 1fr;           /* photo on top, text below */
+  }
+
+  .profile-grid .profile-photo .photo-placeholder,
+  .profile-grid .profile-photo .team-photo {
+    width: 6.5rem;                        /* smaller photo, so the card is not too tall */
+    height: 6.5rem;
+    margin: 0 auto;
+    font-size: 2rem;
+  }
+
+  /* Tighter spacing inside the 3 cards */
+  .profile-grid .profile {
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .profile-grid .profile-name {
+    font-size: 1.35rem;
+  }
+
+  .profile-grid .profile h4 {
+    margin-top: 1rem;
+  }
+
+  .profile-grid .profile-info .tag-list {
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* Phones: the header is small (about 4.25rem). The hero fills the rest of
+   the first screen. The other sections are one full screen each. */
+@media (max-width: 767px) {
+  .hero {
+    min-height: calc(100vh - 4.25rem);
+    min-height: calc(100svh - 4.25rem);
+  }
+}
+
+/* Short laptop screens (for example 1366 x 768): less empty space inside
+   each section, so more of the content fits on one screen. */
+@media (min-width: 1200px) and (max-height: 820px) {
+  .section {
+    padding: 3rem 0;
+  }
+
+  .section-title {
+    margin-bottom: 1.5rem;
+  }
+
+  /* The 3 profile cards get a little smaller still */
+  .profile-grid .profile {
+    padding: 1.25rem 1.5rem;
+    gap: 0.75rem;
+  }
+
+  .profile-grid .profile-photo .photo-placeholder,
+  .profile-grid .profile-photo .team-photo {
+    width: 5rem;
+    height: 5rem;
+    font-size: 1.6rem;
+  }
+
+  .profile-grid .profile h4 {
+    margin-top: 0.75rem;
+  }
+}
+
+/* Phones: smaller shapes so they never get in the way */
+@media (max-width: 639px) {
+  .section::before {
+    width: 11rem;
+    height: 11rem;
+  }
+}
+
+
+/* =====================================================================
+   19. EXTRA DESIGN TOUCHES
+   Small, clean details:
+   1. Background: a light color wash and a second thin shape per section
+   2. Icons drawn with CSS only (no images, no fonts)
+   3. Nicer cards and buttons
+   4. Hover effects and a soft fade-in while you scroll
+   ===================================================================== */
+
+/* ----- 1. Background ----- */
+
+/* A very light green color wash, from the top-left corner */
+.section {
+  background-image: linear-gradient(160deg, var(--wash), transparent 55%);
+}
+
+/* The big shapes (::before) now drift very slowly */
+.section::before {
+  animation: float-shape 18s ease-in-out infinite alternate;
+}
+
+/* A second, smaller shape (::after): a thin amber ring or square */
+.section::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: 7rem;
+  height: 7rem;
+  border: 2px solid var(--accent-soft);
+  border-radius: 50%;               /* a ring */
+  pointer-events: none;
+  animation: float-shape 14s ease-in-out infinite alternate;
+}
+
+/* These sections get a turned square instead of a ring */
+#skills::after,
+#journey::after,
+#values::after,
+#contact::after {
+  border-radius: 18px;
+  rotate: 20deg;
+}
+
+#about::after    { bottom: 3rem;  left: -2rem; }
+#team::after     { top: 2rem;     right: 6%; }
+#profiles::after { top: 3rem;     left: -2rem; }
+#skills::after   { bottom: 2rem;  right: 5%; }
+#projects::after { bottom: 2rem;  left: 4%; }
+#journey::after  { top: 2rem;     right: -2rem; }
+#learning::after { top: 3rem;     left: 3%; }
+#values::after   { bottom: 2rem;  left: -2rem; }
+#contact::after  { top: 3rem;     right: -2rem; }
+
+@media (max-width: 639px) {
+  .section::after {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+}
+
+/* ----- 2. Icons made with CSS ----- */
+
+/* Goals list: an amber circle with a check mark instead of a bullet */
+.about-text ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.about-text ul li {
+  position: relative;
+  margin-bottom: 0.5rem;
+  padding-left: 2rem;
+}
+
+.about-text ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.3em;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  background-color: var(--warm-amber);
+}
+
+.about-text ul li::after {
+  content: "";
+  position: absolute;
+  left: 0.44rem;
+  top: 0.43em;
+  width: 0.3rem;
+  height: 0.6rem;
+  border-right: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  transform: rotate(40deg);         /* turns an "L" shape into a check mark */
+}
+
+/* "At a Glance" list: a small amber diamond before each line */
+.glance-list li {
+  position: relative;
+  padding-left: 1.4rem;
+}
+
+.glance-list li::before {
+  content: "";
+  position: absolute;
+  left: 0.15rem;
+  top: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--warm-amber);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* Email line: a small envelope (a box with a "V" on top) */
+.contact-email::before {
+  content: "";
+  display: inline-block;
+  width: 1.3rem;
+  height: 0.95rem;
+  margin-right: 0.6rem;
+  border: 2px solid var(--warm-amber);
+  border-radius: 3px;
+  vertical-align: -0.1em;
+  background:
+    linear-gradient(to top right, transparent 44%, var(--warm-amber) 44%, var(--warm-amber) 56%, transparent 56%) left top / 50% 65% no-repeat,
+    linear-gradient(to top left, transparent 44%, var(--warm-amber) 44%, var(--warm-amber) 56%, transparent 56%) right top / 50% 65% no-repeat;
+}
+
+/* Arrow (chevron) icon: two borders of a small square, turned 45 degrees */
+.button:not(:disabled)::after,
+.contact-info .link-list a::after {
+  content: "";
+  display: inline-block;
+  width: 0.45em;
+  height: 0.45em;
+  margin-left: 0.65rem;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  transform: translateY(-0.08em) rotate(45deg);   /* points right */
+  transition: transform 0.2s ease;
+}
+
+.button:not(:disabled):hover::after,
+.contact-info .link-list a:hover::after {
+  transform: translate(0.25rem, -0.08em) rotate(45deg);   /* the arrow moves a little */
+}
+
+/* "Back to Team" goes up, so its arrow points up */
+.profile .button:not(:disabled)::after {
+  transform: translateY(0.08em) rotate(-45deg);
+}
+
+.profile .button:not(:disabled):hover::after {
+  transform: translateY(-0.15em) rotate(-45deg);
+}
+
+/* ----- 3. Cards and buttons ----- */
+
+/* The teal cards get a soft light from the top-left and a thin top highlight */
+.about-card,
+.team-card,
+.skill-card,
+.learning-card,
+.value-card {
+  background-image: linear-gradient(155deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0) 55%);
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.team-card:hover,
+.skill-card:hover,
+.learning-card:hover,
+.value-card:hover {
+  box-shadow: var(--shadow-hover), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+/* The colored edge gets brighter on hover */
+.team-card,
+.project-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.team-card:hover {
+  border-top-color: var(--amber-light);
+}
+
+.project-card:hover {
+  border-top-color: var(--warm-amber);
+}
+
+.profile:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+/* Tags move up a little on hover */
+.tag-list li {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.tag-list li:hover {
+  transform: translateY(-2px);
+  border-color: var(--timeline-color);
+}
+
+/* Main button: a soft gradient, and it "presses down" when you click it */
+.button-primary {
+  background-image: linear-gradient(180deg, var(--amber-light), var(--warm-amber));
+}
+
+.button-primary:hover {
+  background-image: linear-gradient(180deg, #E4AE63, var(--amber-light));
+}
+
+.button:not(:disabled):active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: none;
+}
+
+/* ----- 4. Fade in while you scroll -----
+   Only in browsers that support it. Other browsers show everything
+   normally. "backwards" means the effect is removed at the end, so the
+   hover effects keep working. */
+@supports (animation-timeline: view()) {
+  .section-label,
+  .section-title,
+  .about-layout > *,
+  .card-grid > *,
+  .profile-grid > *,
+  .contact-layout > * {
+    animation: fade-up linear backwards;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+
+
+/* =====================================================================
+   20. REDUCED MOTION
+   Some people get dizzy or distracted by animation. If their device is
+   set to "reduce motion", we turn animations and transitions off and
+   show everything right away. The typing text is shown fully.
+   ===================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;          /* jump instead of smooth scrolling */
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .team-card:hover,
+  .skill-card:hover,
+  .learning-card:hover,
+  .value-card:hover,
+  .project-card:hover,
+  .button:hover,
+  .button:not(:disabled):active,
+  .tag-list li:hover,
+  .timeline-item:hover::before,
+  .value-card:hover .value-icon {
+    transform: none;
+  }
+}
